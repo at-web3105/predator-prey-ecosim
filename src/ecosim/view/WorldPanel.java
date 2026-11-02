@@ -10,6 +10,7 @@ import ecosim.model.World;
 import ecosim.stats.StatsRecorder;
 import ecosim.view.render.BodyRenderer;
 import ecosim.view.render.EnergyBarDecorator;
+import ecosim.view.render.HungerDecorator;
 import ecosim.view.render.Renderer;
 import ecosim.view.render.StateLabelDecorator;
 import ecosim.view.render.VisionRingDecorator;
@@ -34,7 +35,7 @@ public final class WorldPanel extends JPanel {
     private final StatsRecorder stats;
     private BufferedImage grassImage;
 
-    private boolean showVision, showEnergy, showLabels;
+    private boolean showVision, showEnergy, showLabels, showHunger;
     private Renderer renderer = new BodyRenderer();
     private String status = "";
 
@@ -51,6 +52,7 @@ public final class WorldPanel extends JPanel {
     public void toggleVision() { showVision = !showVision; rebuildRenderer(); }
     public void toggleEnergy() { showEnergy = !showEnergy; rebuildRenderer(); }
     public void toggleLabels() { showLabels = !showLabels; rebuildRenderer(); }
+    public void toggleHunger() { showHunger = !showHunger; rebuildRenderer(); }
     public void setStatus(String s) { status = s; }
 
     /**
@@ -61,6 +63,7 @@ public final class WorldPanel extends JPanel {
         Renderer r = new BodyRenderer();
         if (showEnergy) r = new EnergyBarDecorator(r);
         if (showLabels) r = new StateLabelDecorator(r);
+        if (showHunger) r = new HungerDecorator(r);
         if (showVision) r = new VisionRingDecorator(r);
         renderer = r;
     }
@@ -123,7 +126,7 @@ public final class WorldPanel extends JPanel {
                         stats.births(), stats.deaths(DeathCause.EATEN),
                         stats.deaths(DeathCause.STARVED), stats.deaths(DeathCause.OLD_AGE)),
                 stats.latest() == null ? "" : String.format("step %.2f ms", stats.latest().stepMillis()),
-                "[space] pause  [P] parallel  [V] vision  [E] energy  [L] labels  [R] reset",
+                "[space] pause  [P] parallel  [V] vision  [E] energy  [L] labels  [H] hunger  [R] reset",
                 "[up/down] speed  click: +rabbits  right-click: +foxes   " + status,
         };
         g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
