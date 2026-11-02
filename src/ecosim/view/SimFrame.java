@@ -77,6 +77,7 @@ public final class SimFrame extends JFrame {
                     case KeyEvent.VK_V -> worldPanel.toggleVision();
                     case KeyEvent.VK_E -> worldPanel.toggleEnergy();
                     case KeyEvent.VK_L -> worldPanel.toggleLabels();
+                    case KeyEvent.VK_H -> worldPanel.toggleHunger();
                     case KeyEvent.VK_UP -> stepsPerFrame = Math.min(20, stepsPerFrame + 1);
                     case KeyEvent.VK_DOWN -> stepsPerFrame = Math.max(1, stepsPerFrame - 1);
                     case KeyEvent.VK_R -> { world.reset(); stats.reset(); worldPanel.setStatus(""); paused = false; }
